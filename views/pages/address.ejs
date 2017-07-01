@@ -1,0 +1,82 @@
+<% include ../partials/head %>
+<main>
+    <div class="container" style="align:center;">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <form class="form-horizontal" role="form" action="/checkout" method="post">
+                    <fieldset>
+
+                        <!-- Form Name -->
+                        <legend>Shipping Details</legend>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Line 1</label>
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="Address Line 1" class="form-control" value="<%= address[0]%>" required>
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Line 2</label>
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="Address Line 2" class="form-control" value="<%= address[1]%>" required>
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">City</label>
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="City" class="form-control" value="<%= address[2]%>" required>
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">State</label>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="State" class="form-control" value="<%= address[3]%>" required>
+                            </div>
+
+                            <label class="col-sm-2 control-label" for="textinput">Postcode</label>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="Post Code" class="form-control" value="<%= address[4]%>" required>
+                            </div>
+                        </div>
+
+
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Country</label>
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="Country" class="form-control" value="<%= address[5]%>" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Phone</label>
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="Phone" class="form-control" value="<%= (locals.user) ? user.Phone:''%>" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="pull-left">
+                                        <a href="/" class="btn btn-warning"><i class="fa fa-angle-left"></i> Cancel</a>
+                                </div>
+                                <div class="pull-right">
+                                      <button type="submit" class="btn btn-primary">Confirm Checkout</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div><!-- /.col-lg-12 -->
+        </div><!-- /.row -->
+    </div>
+</main>
+<% include ../partials/footer %>

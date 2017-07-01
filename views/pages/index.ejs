@@ -1,0 +1,78 @@
+<% include ../partials/head %>
+	<main>
+		<div class="container" style="align:center; margin: 20px 0px 0px 0px">
+		<div class="row">
+		<% items.forEach(function(item) { %>
+			<div class="col-md-4">
+				<div class="thumbnail">
+					<% if(loggedIn == true) {%>
+						<% if((user.Role == 'Member' || user.Role == 'Admin') && !locals.new) {%>
+					<form id="editItemForm" action="/getItem" method="POST">
+						<input type="hidden" name="itemId" value="<%= item.ItemId%>">
+						<button id="edit" class="btn btn-info btn-xs" style="width: 20px; height: 20px; margin: 0px 0px 0px 320px"><i class="glyphicon glyphicon-edit"></i></button>
+					</form>
+						<% }%>
+					<% }%>
+					<img src="<%= item.ImageUrl%>" alt= <%= item.ItemName %> style="height: 200px; width: 200px">
+					<div class="caption" align="center">
+						<% if(locals.new) {%>
+						<form align="center" action="/updateItem" method="POST">
+							<div class="form-group" style="width: 80%; margin: 10px 0 10px 20px;">
+								<input name="itemName" type="text" class="form-control" value="<%= item.ItemName%>"required>
+							</div>
+							<div class="form-group" style="width: 80%; margin: 10px 0 10px 20px">
+								<div class="input-group">
+									<span class="input-group-addon">$</span>
+									<input name="price" class="form-control" value="<%= item.Price%>" type="number" step="0.01" required>
+								</div>
+							</div>
+							<div class="form-group" style="width: 80%; margin: 10px 0 10px 20px">
+								<input name="quantity" class="form-control" value="<%= item.Quantity %>" type="number" required>
+							</div>
+							<div class="form-group" style="width: 80%; margin: 10px 0 10px 20px">
+								<textarea class="form-control" name="description" required><%= item.Description%></textarea>
+							</div>
+							<select name="categorySelectId" style= "display: block; width: 80%; margin: 10px 0 10px 20px; height: 34px; padding: 6px 12px; font-size: 14px; line-height: 1.42857143; color: #555; background-color: #fff; border: 1px solid #ccc; border-radius: 4px">
+								<% categories.forEach(function(category) { %>q
+								<option value=<%= category.CategoryId %>><%= category.CategoryName %></option>
+								<% }); %>
+							</select>
+							<table align="center">
+								<tr>
+									<td>
+											<input type="hidden" value=<%= item.ItemId%> name="itemId">
+											<button class="btn btn-success btn-lg" ><i class="glyphicon glyphicon-ok"></i></button>
+
+									</td>
+						</form>
+									<td>
+										<form id="uncheckItemForm" action="/uncheckItem" method="POST"style="margin: 0px 0px 0px 50px">
+											<input type="hidden" value=<%= item.ItemId%> name="itemId">
+											<button class="btn btn-danger btn-lg"><i class="glyphicon glyphicon-remove"></i></button>
+										</form>
+									</td>
+								</tr>
+							</table>
+						<% } else {%>
+							<label class="itemName" style="color: maroon; font-size: 20px;"><%= item.ItemName %></label>
+							<p style="color: black; font-size: 15px;" class="itemPrice"><strong>$<%= item.Price %></strong></p>
+						<form id="addToCartForm" action="/addToCart" method="POST">
+							<input type="hidden" name="itemId" value=<%= item.ItemId%>>
+							<span class="input-group-btn">
+								<button class="btn btn-warning" style="width: 350px; height: 40px; border: none; align: left; font-size:15px; text-align:center; margin: 0px 0px 0px -10px;" type="submit">Add To Cart</button>
+							</span>
+						</form>
+						<% }%>
+					</div>
+				</div>
+			</div>
+		<% }); %>
+		</div>
+			<% if(locals.new) {%>
+			<a href="/" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a>
+			<% }%>
+		</div>
+	</main>
+
+<% include ../partials/footer %>
+	

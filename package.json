@@ -1,0 +1,23 @@
+{
+  "name": "catawbadatabase",
+  "main": "server.js",
+  "dependencies": {
+    "aws-sdk": "^2.7.13",
+    "body-parser": "^1.15.2",
+    "bookshelf": "^0.10.2",
+    "ejs": "^2.5.2",
+    "express": "^4.14.0",
+    "express-session": "^1.14.2",
+    "formidable": "^1.0.17",
+    "http": "0.0.0",
+    "jsonwebtoken": "^7.1.9",
+    "knex": "^0.12.6",
+    "morgan": "^1.7.0",
+    "mysql": "^2.11.1",
+    "nodemailer": "^2.7.0",
+    "path": "^0.12.7",
+    "s3-uploader": "^2.0.3",
+    "session-file-store": "^0.2.2",
+    "uuid": "^2.0.3"
+  }
+}

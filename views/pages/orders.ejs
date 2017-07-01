@@ -1,0 +1,42 @@
+<% include ../partials/head %>
+<main>
+    <div class="container" style="align:center;">
+        <table id="cart" class="table table-hover table-condensed" style="vertical-align: middle;">
+            <thead>
+            <tr>
+                <th style="width:50%">Product</th>
+                <th style="width:10%">Price</th>
+                <th style="width:8%">Quantity</th>
+                <th style="width:22%" class="text-center">Total</th>
+                <th style="width:10%"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% solditems.forEach(function(item) { %>
+            <tr>
+                <td data-th="Product">
+                    <div class="row">
+                        <div class="col-sm-2 hidden-xs"><img src="<%= item.ImageUrl%>" alt="..." class="img-responsive" style="height: 100px; width:100px;"/></div>
+                        <div class="col-sm-10">
+                            <h4 class="nomargin"><%= item.ItemName %></h4>
+                            <p><%= item.Description %></p>
+                            <p>Purchased on: <strong><%= item.SoldDate%></strong></p>
+                        </div>
+                    </div>
+                </td>
+                <td data-th="Price" id="cartItemPrice">$<%= item.Price %></td>
+                <td data-th="Quantity" class="text-center"><%= item.SoldQuantity %></td>
+                <td data-th="Subtotal" class="text-center">$<%= item.Price * item.SoldQuantity %></td>
+            </tr>
+            <% }); %>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td><a href="/" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</main>
+<% include ../partials/footer %>
+

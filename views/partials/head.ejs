@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Single page web app using Angularjs</title>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+<script type="text/javascript">
+    window.onload=function() {
+        $('#myTabs').on('click', '.nav-tabs a', function () {
+            $(this).closest('.dropdown').addClass('dontClose');
+        })
+
+        $('#loginDropDown').on('hide.bs.dropdown', function (e) {
+            if ($(this).hasClass('dontClose')) {
+                e.preventDefault();
+            }
+            $(this).removeClass('dontClose');
+        });
+
+        $("#cartQuantity").bind('keyup mouseup', function () {
+            var price = $("#cartItemPrice").text().substring(1, $("#cartItemPrice").text().length);
+            var quantity = $("#cartQuantity").val();
+            var initialSubTotal = $("#cartSubTotal").text().substring(1, $("#cartSubTotal").text().length);
+            var subTotal = price * quantity;
+            var subTotalString = subTotal.toString();
+            var Total = $("#cartTotal").text().substring(7, $("#cartTotal").text().length);
+            var newTotal = Total - initialSubTotal + subTotal;
+            $("#cartTotal").html("<strong>Total $".concat(newTotal.toString()).concat("</strong>"));
+            $("#cartSubTotal").text("$".concat(subTotalString));
+
+        });
+    };
+
+</script>
+<div class="container">
+	<header style="background-image: url('/images/background.jpg'); background-repeat: no-repeat; height: 250px; margin: -100px 0px 0px 50px;">
+		<div class="panel-heading" align="center" style="margin: 130px 0px 0px 0px;">
+      		<label class="pull-left" style="font-size: 100px; font-family: 'Baskerville Old Face'">Catawba</label>
+    	</div>
+        <div class="panel-body" style="margin: 100px 0px -10px -110px;">
+            <% if (error == true) {%>
+            <div class="alert alert-danger pull-left" role="alert">
+                <strong>Error! </strong> <%= message %>
+            </div>
+            <% } else if (alert == true) {%>
+            <div class="alert alert-info pull-left" role="alert">
+                <strong><%= message %></strong>
+            </div>
+            <% } %>
+        <table align="bottom" style="margin: -20px 0px 0px 0px">
+            <form id="searchForm" action="/getCategory" method="post">
+            <td rowspan="2">
+                <select name="categorySelectId" style= "display: block; width: 200px; height: 34px; padding: 6px 12px; font-size: 14px; line-height: 1.42857143; color: #555; background-color: #fff; border: 1px solid #ccc; border-radius: 4px">
+                    <option <%= (categorySelected == 'None') ? "selected" : "" %> value="all">All Categories</option>
+                    <% categories.forEach(function(category) { %>
+                        <option <%= (categorySelected == category.CategoryId) ? "selected" : "" %> value=<%= category.CategoryId %>><%= category.CategoryName %></option>
+                    <% }); %>    
+                </select>
+            </td>
+            <td rowspan="4"><input type="text" class="form-control" name="searchTerm" placeholder="Search term..." style="width:800px"></td>
+            <td>
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </td>
+            </form>
+            <% if (loggedIn == true && user.Role != 'User') {%>
+            <td style="padding: 0 0 0 30px">
+                <div id="donateDropDown" class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Donate <span class="glyphicon glyphicon-plus"></span></button>
+                    <form class="dropdown-menu" align="center" style="width: 250px" action="/donate" method="POST" enctype="multipart/form-data">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="image-upload" align="center">
+                                        <label for="file-input">
+                                            <img src="/images/Camera.ico" style="width: 100px;cursor: pointer;"/>
+                                        </label>
+
+                                        <input id="file-input" name="image" type="file" style="display: none;" accept="image/*"/>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group" style="width: 80%; margin: 10px 0 10px 20px">
+                                        <input name="itemName" type="text" placeholder="Item Name" class="form-control" required>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group" style="width: 80%; margin: 10px 0 10px 20px">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">$</span>
+                                                <input name="price" class="form-control" placeholder="Price" type="number" step="0.01" required>
+                                            </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group" style="width: 80%; margin: 10px 0 10px 20px">
+                                            <input name="quantity" class="form-control" placeholder="Quantity" type="number" required>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group" style="width: 80%; margin: 10px 0 10px 20px">
+                                        <textarea class="form-control" name="description" placeholder="Item Description" required></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group" align="center" style="width: 80%; margin: 0 0 10px 20px">
+                                        <button class="btn btn-primary" type="submit">Donate</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </td>
+            <%} else if(loggedIn == true){%>
+            <td style="padding: 0 0 0 30px">
+                <form id="requestForm" action="/requestToDonate" method="post">
+                    <button class="btn btn-primary " type="submit">Request to Donate <span class="glyphicon glyphicon-plus"></span></button>
+                </form>
+            </td>
+            <% }%>
+            <td style="padding: 0 0 0 30px">
+                <% if (loggedIn == false) { %>
+                <div id="loginDropDown" class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Login <span class="glyphicon glyphicon-user"></span></button>
+                    <div class="dropdown-menu" id="myTabs">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-target="#login" data-toggle="tab">Login</a></li>
+                            <li><a data-target="#register" data-toggle="tab">Register</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="login">
+                                <form id="loginForm" method="POST" action="/login" style="width: 230px; align: center;">
+                                    <div class="form-group" style="width: 80%; margin: 10px 0 10px 20px">
+                                        <input class="form-control" placeholder="Email Address" name="email" type="email">
+                                    </div>
+                                    <div class="form-group" style="width: 80%; margin: 0 0 10px 20px">
+                                        <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                    </div>
+                                    <input class="btn btn-lg btn-success btn-block" type="submit" value="Login" style="width: 80%; margin: 0 0 10px 20px">
+                                </form>
+                            </div>
+                            <div class="tab-pane" id="register">
+                                <form id="registerForm" method="POST" action="/register" style="width: 230px; align: center;">
+                                    <div class="form-group" style="width: 80%; margin: 10px 0 10px 20px">
+                                        <input class="form-control" placeholder="Name" name="name" type="text">
+                                    </div>
+                                    <div class="form-group" style="width: 80%; margin: 0 0 10px 20px">
+                                        <input class="form-control" placeholder="Email Address" name="email" type="email">
+                                    </div>
+                                    <div class="form-group" style="width: 80%; margin: 10px 0 10px 20px">
+                                        <input class="form-control" placeholder="Password" name="password" type="password">
+                                    </div>
+                                    <div class="form-group" style="width: 80%; margin: 0 0 10px 20px">
+                                        <input class="form-control" placeholder="Re-enter Password" name="repassword" type="password" value="">
+                                    </div>
+                                    <div class="checkbox">
+                                        <input type="checkbox" name="newsletter" style="margin: 0 0 10px 20px"><label style="width: 80%; margin: 0 0 10px 20px">I would like to receive newsletter via email.</label>
+                                    </div>
+                                    <input class="btn btn-lg btn-success btn-block" type="submit" value="Register" style="width: 80%; margin: 0 0 10px 20px">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } else { %>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Hello, <%= user.Name %> <span class="glyphicon glyphicon-user"></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/getMyOrders">My Orders</a></li>
+                            <li><a href="/getMyAccount">My Account</a></li>
+                            <% if (user.Role == 'Member' || user.Role == 'Admin') {%>
+                                <li><a href="/getNewItems">New Items</a></li>
+                                <li><a href="/getUsers">Users</a></li>
+                            <% } %>
+                            <li><a href="/logout">Logout <span class="glyphicon glyphicon-off"></span></a></li>
+                        </ul>
+                    </div>
+                <% } %>
+            </td>
+            <td style="padding: 0 0 0 30px">
+                <form id="cartForm" action="/getCart" method="POST">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" style="border: none; font-size: 20px;" type="submit"><span class="glyphicon glyphicon-shopping-cart"></span></button>
+                    </span>
+                </form>
+            </td>
+
+        </table>
+        </div>
+	</header>

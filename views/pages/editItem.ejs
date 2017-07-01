@@ -1,0 +1,54 @@
+<% include ../partials/head %>
+<main>
+    <div class="container">
+        <form align="center" action="/saveItem" method="POST" style="margin: 80px 0px 50px 150px">
+            <table>
+                <tr>
+                    <td rowspan="5">
+                        <img src="<%= item.ImageUrl%>" style="width: 250px; height: 250px; cursor: pointer;"/>
+                    </td>
+                    <td>
+                        <div class="form-group" style="margin: 10px 0 10px 80px">
+                            <input name="itemName" type="text" value="<%= item.ItemName%>" class="form-control" required>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group" style="margin: 10px 0 10px 80px">
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input name="price" class="form-control" value="<%= item.Price%>" type="number" step="0.01" required>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group" style="margin: 10px 0 10px 80px">
+                            <input name="quantity" class="form-control" value="<%= item.Quantity%>" type="number" required>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group" style="margin: 10px 0 10px 80px">
+                            <textarea class="form-control" name="description" required><%= item.Description%></textarea>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group" style="margin: 0 0 10px 80px">
+                            <input type="hidden" name="itemId" value="<%= item.ItemId%>">
+                            <button class="btn btn-primary" type="submit">Save</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</main>
+
+<% include ../partials/footer %>
+
